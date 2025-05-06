@@ -3,7 +3,7 @@ import {RemixServer} from '@remix-run/react';
 import {isbot} from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 import {createContentSecurityPolicy} from '@shopify/hydrogen';
-
+import {getWeaverseCsp} from './weaverse/csp';
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -12,6 +12,7 @@ export default async function handleRequest(
   context: AppLoadContext,
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    ...getWeaverseCsp(request, context),
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
