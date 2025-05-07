@@ -2,6 +2,9 @@ import {createHydrogenContext} from '@shopify/hydrogen';
 import {AppSession} from '~/lib/session';
 import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
 import {getLocaleFromRequest} from '~/lib/i18n';
+import { WeaverseClient } from "@weaverse/hydrogen";
+import { themeSchema } from "~/weaverse/schema.server";
+import { components } from "~/weaverse/components";
 
 /**
  * The context implementation is separate from server.ts
@@ -39,6 +42,12 @@ export async function createAppLoadContext(
 
   return {
     ...hydrogenContext,
-    // declare additional Remix loader context
+    weaverse: new WeaverseClient({
+      ...hydrogenContext,
+      request,
+      cache,
+      themeSchema,
+      components,
+    }),
   };
 }

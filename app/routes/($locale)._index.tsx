@@ -9,6 +9,7 @@ import type {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {WeaverseContent} from '~/weaverse/index';
+import { PageType } from '@weaverse/hydrogen';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -29,13 +30,25 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const [{collections}] = await Promise.all([
+  let getWeaverseData = async () => {
+    let type: PageType = "INDEX";
+
+    // Load the Weaverse page data
+    let weaverseData = await context.weaverse.loadPage({ type });
+    if (!weaverseData?.page?.id || weaverseData.page.id.includes("fallback")) {
+      throw new Response(null, { status: 404 });
+    }
+    return weaverseData;
+  }
+  const [{ collections }, weaverseData] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
+    getWeaverseData()
   ]);
 
   return {
     featuredCollection: collections.nodes[0],
+    weaverseData,
   };
 }
 
@@ -62,11 +75,11 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <>
+      <WeaverseContent />
       <div className="home">
         <FeaturedCollection collection={data.featuredCollection} />
         <RecommendedProducts products={data.recommendedProducts} />
       </div>
-      <WeaverseContent />
     </>
   );
 }
