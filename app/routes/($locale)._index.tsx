@@ -9,7 +9,7 @@ import type {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {WeaverseContent} from '~/weaverse/index';
-import { PageType } from '@weaverse/hydrogen';
+import {PageType} from '@weaverse/hydrogen';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -30,20 +30,20 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  let getWeaverseData = async () => {
-    let type: PageType = "INDEX";
+  const getWeaverseData = async () => {
+    const type: PageType = 'INDEX';
 
     // Load the Weaverse page data
-    let weaverseData = await context.weaverse.loadPage({ type });
-    if (!weaverseData?.page?.id || weaverseData.page.id.includes("fallback")) {
-      throw new Response(null, { status: 404 });
+    const weaverseData = await context.weaverse.loadPage({type});
+    if (!weaverseData?.page?.id || weaverseData.page.id.includes('fallback')) {
+      throw new Response(null, {status: 404});
     }
     return weaverseData;
-  }
-  const [{ collections }, weaverseData] = await Promise.all([
+  };
+  const [{collections}, weaverseData] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
-    getWeaverseData()
+    getWeaverseData(),
   ]);
 
   return {
@@ -75,11 +75,12 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <>
-      <WeaverseContent />
       <div className="home">
         <FeaturedCollection collection={data.featuredCollection} />
         <RecommendedProducts products={data.recommendedProducts} />
       </div>
+      <WeaverseContent />
+      {/* <Paragraph content="Hello World" /> */}
     </>
   );
 }
@@ -104,7 +105,6 @@ function FeaturedCollection({
         )}
         <h1>{collection.title}</h1>
       </Link>
-      <Paragraph content="Hello World" />
     </>
   );
 }
