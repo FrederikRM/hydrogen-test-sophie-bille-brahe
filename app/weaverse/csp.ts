@@ -4,11 +4,11 @@ import type {AppLoadContext} from '@shopify/remix-oxygen';
 // Example based on Weaverse Pilot theme
 // See: [Pilot csp file on GitHub](https://github.com/Weaverse/pilot/blob/main/app/weaverse/csp.ts)
 export function getWeaverseCsp(request: Request, context: AppLoadContext) {
-  let url = new URL(request.url);
-  let weaverseHost = context.env?.WEAVERSE_HOST || 'https://weaverse.io';
-  let isDesignMode = url.searchParams.get('weaverse_design_mode') === 'true';
+  const url = new URL(request.url);
+  const weaverseHost = context.env?.WEAVERSE_HOST || 'https://weaverse.io';
+  const isDesignMode = url.searchParams.get('weaverse_design_mode') === 'true';
 
-  let weaverseHosts = [
+  const weaverseHosts = [
     new URL(weaverseHost).host,
     'weaverse.io',
     '*.weaverse.io',
@@ -17,7 +17,7 @@ export function getWeaverseCsp(request: Request, context: AppLoadContext) {
     '*.myshopify.com',
   ];
 
-  let updatedCsp: {[key: string]: string[] | string | boolean} = {
+  const updatedCsp: {[key: string]: string[] | string | boolean} = {
     frameAncestors: weaverseHosts,
     defaultSrc: [
       "'self'",

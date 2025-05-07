@@ -17,7 +17,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
-
+import {GlobalStyle} from '~/weaverse/style';
 export type RootLoader = typeof loader;
 
 /**
@@ -156,6 +156,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />
+        <GlobalStyle />
       </head>
       <body>
         {data ? (

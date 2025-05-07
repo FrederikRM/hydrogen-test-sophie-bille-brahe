@@ -4,7 +4,7 @@ import pkg from '../../package.json'; // Use your project's package
 
 // Example based on Weaverse Pilot theme
 // See: [Pilot schema file on GitHub](https://github.com/Weaverse/pilot/blob/main/app/weaverse/schema.server.ts)
-export let themeSchema: HydrogenThemeSchema = {
+export const themeSchema: HydrogenThemeSchema = {
   info: {
     version: pkg.version,
     author: 'Your Store Name', // Customize

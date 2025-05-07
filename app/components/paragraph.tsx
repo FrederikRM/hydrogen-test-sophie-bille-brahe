@@ -15,7 +15,7 @@ export interface ParagraphProps
   color?: string;
 }
 
-let variants = cva('paragraph', {
+const variants = cva('paragraph', {
   variants: {
     textSize: {
       xs: 'text-xs',
@@ -48,11 +48,11 @@ let variants = cva('paragraph', {
   },
 });
 
-let Paragraph = forwardRef<
+const Paragraph = forwardRef<
   HTMLParagraphElement | HTMLDivElement,
   ParagraphProps
 >((props, ref) => {
-  let {
+  const {
     as: Tag = 'p',
     width,
     content,
@@ -77,7 +77,7 @@ let Paragraph = forwardRef<
 
 export default Paragraph;
 
-export let schema: HydrogenComponentSchema = {
+const schema: HydrogenComponentSchema = {
   type: 'paragraph',
   title: 'Paragraph',
   inspector: [
