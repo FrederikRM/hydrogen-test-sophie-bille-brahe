@@ -18,6 +18,7 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
 import {GlobalStyle} from '~/weaverse/style';
+import { withWeaverse } from '@weaverse/hydrogen';
 export type RootLoader = typeof loader;
 
 /**
@@ -177,9 +178,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
   );
 }
 
-export default function App() {
+function App() {
   return <Outlet />;
 }
+export default withWeaverse(App);
 
 export function ErrorBoundary() {
   const error = useRouteError();

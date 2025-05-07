@@ -77,7 +77,7 @@ const Paragraph = forwardRef<
 
 export default Paragraph;
 
-const schema: HydrogenComponentSchema = {
+export const schema: HydrogenComponentSchema = {
   type: 'paragraph',
   title: 'Paragraph',
   inspector: [
@@ -170,3 +170,4 @@ const schema: HydrogenComponentSchema = {
     },
   ],
 };
+
